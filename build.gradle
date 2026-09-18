@@ -1,55 +1,36 @@
-buildscript {
-    ext.kotlin_version = '1.1.1'
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.android.tools.build:gradle:2.2.3"
-    }
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
-
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
-
+    namespace = "com.example.nettools"
+    compileSdk = 34
+    
     defaultConfig {
-        applicationId "org.kotlin.sample"
-        minSdkVersion 19
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.example.nettools"
+        minSdk = 29
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-}
-
-repositories {
-    jcenter()
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "com.android.support:appcompat-v7:25.3.1"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.14"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:0.14"
-    compile "io.reactivex.rxjava2:rxjava:2.0.8"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.14"
-    compile "com.chibatching.kotpref:kotpref:2.1.1"
-    compile "org.jetbrains.anko:anko-sdk19:0.9.1"
-    compile "org.jetbrains.anko:anko-appcompat-v7:0.9.1"
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = "3.4.1"
+    // Coroutines & Lifecycle
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    
+    // Room Database
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    
+    // Retrofit & OkHttp
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    
+    // dnsjava
+    implementation("dnsjava:dnsjava:3.5.3")
 }
